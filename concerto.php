@@ -132,15 +132,6 @@ class Connessione{
     }
 }
 
-
-
-
-
-
-
-
-
-
 $cod = 123;
 $titolo_concerto = "Prova per concerto";
 $des = "Vediamo se funziona";
