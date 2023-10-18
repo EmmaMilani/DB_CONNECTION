@@ -132,14 +132,14 @@ class Connessione{
     }
 }
 
-$cod = 123;
+$codice_concerto = 123;
 $titolo_concerto = "Prova per concerto";
-$des = "Vediamo se funziona";
+$descr_concerto = "Vediamo se funziona";
 $data_concerto = "16/10/2023";
 $salId = 1;
 $orcId = 1;
 
 //richiamo metodo statico per creare un record da inserire all'interno del database
-Concerto::create($cod, $titolo_concerto, $des, $data_concerto, $salId, $orcId);
+Concerto::create($codice_concerto, $titolo_concerto, $descr_concerto, $data_concerto, $salId, $orcId);
 
 ?>
