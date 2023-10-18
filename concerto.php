@@ -136,10 +136,10 @@ $codice_concerto = 123;
 $titolo_concerto = "Prova per concerto";
 $descr_concerto = "Vediamo se funziona";
 $data_concerto = "16/10/2023";
-$salId = 1;
-$orcId = 1;
+$salId_concerto = 1;
+$orcId_concerto = 1;
 
 //richiamo metodo statico per creare un record da inserire all'interno del database
-Concerto::create($codice_concerto, $titolo_concerto, $descr_concerto, $data_concerto, $salId, $orcId);
+Concerto::create($codice_concerto, $titolo_concerto, $descr_concerto, $data_concerto, $salId_concerto, $orcId_concerto);
 
 ?>
