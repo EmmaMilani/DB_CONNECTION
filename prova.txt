@@ -1,3 +1,3 @@
-$sql = 'SELECT * FROM '.$this->tipo.' WHERE id='.$this->id;
+$sql = DELETE FROM concerti WHERE id = 5;
 $stmt = $db->prepare($sql);
 $stmt->execute();
