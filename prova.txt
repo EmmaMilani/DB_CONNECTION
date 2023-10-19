@@ -1,0 +1,3 @@
+$sql = 'SELECT * FROM '.$this->tipo.' WHERE id='.$this->id;
+$stmt = $db->prepare($sql);
+$stmt->execute();
