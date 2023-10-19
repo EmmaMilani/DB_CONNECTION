@@ -1,3 +1,5 @@
-$sql = DELETE FROM concerti WHERE id = 5;
-$stmt = $db->prepare($sql);
-$stmt->execute();
+$sql = "DELETE FROM studenti WHERE cognome = :cognome";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->execute(['cognome' => 'Istrusi']);
+                    allStudents($pdo, "Eliminazione di Istrusi");
+                    echo "Righe cancellate: " .
