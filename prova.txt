@@ -1,8 +1,0 @@
-$sql = "DELETE FROM studenti WHERE cognome = :cognome";
-                    $stmt = $pdo->prepare($sql);
-                    $stmt->execute(['cognome' => 'Istrusi']);
-                    allStudents($pdo, "Eliminazione di Istrusi");
-                    echo "Righe cancellate: " .
-UPDATE Customers
-SET ContactName = 'Alfred Schmidt', City= 'Frankfurt'
-WHERE CustomerID = 1;
