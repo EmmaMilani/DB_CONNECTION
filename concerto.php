@@ -50,7 +50,7 @@ class Concerto
         }
     }
 
-    public function updateCodice($params, $id)
+    public function update($params, $id)
     {
         $query = "UPDATE concerti SET codice = :codice, titolo = :titolo, descrizione = :descrizione, data_ = :data_ WHERE id = :id";
         $data_concerto = $params['data_'];
@@ -275,7 +275,7 @@ while (true) {
 
                 $params = array("codice" => 555, "titolo" =>$titolo_concerto, "descrizione" => $descr_concerto, "data_" => $data_concerto);
                 //modifica valori di un dato record
-                $conc->updateCodice($params, $id_find);
+                $conc->update($params, $id_find);
             } else {
                 echo "Nessun record trovato con l'ID $id_find";
             }
