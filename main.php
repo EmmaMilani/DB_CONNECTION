@@ -2,6 +2,7 @@
 include "concerto.php";
 include "db_manager.php";
 include "sala.php";
+include "pezzo.php";
 
 function chiediDatiConcerto() {
     
@@ -43,12 +44,27 @@ function chiediDatiConcerto() {
     } while ($salaId < 1 || $salaId > $lastId);//verifico che sia nel range degli id delle sale
 
 
+    $lastId = Pezzo::getLastPezzoId();
+    $pezzoId = null;
+    do {
+        //chiedo all'utente di inserire l'id della sala
+        $input = readline("Inserisci l'id del pezzo (numero intero): ");
+        //controllo se la variabile è un intero
+        if (intval($input) == $input) {
+            $pezzoId = (int) $input;
+        } else {
+            echo "Il valore inserito non è un numero intero valido o non è un id di un pezzo. Riprova.\n";
+        }
+    } while ($pezzoId < 1 || $pezzoId > $lastId);//verifico che sia nel range degli id dei pezzi    
+
+
     $concerto = [
         'codice' => $codice,
         'titolo' => $titolo,
         'descrizione' => $descrizione,
         'data_' => $dataConcerto,
         'sala_id' => $salaId,
+        'pezzo_id' => $pezzoId,
     ];
     //ritorno un array associativo
     return $concerto;
@@ -66,6 +82,7 @@ while (true) {
     echo "4. FindAll\n";
     echo "5. Update\n";
     echo "6. Sala\n";
+    echo "7. Pezzo\n";
     echo "0. Esci\n";
     
     $scelta = readline("Scegli un'opzione: ");
@@ -128,6 +145,17 @@ while (true) {
                 echo "\nNome: " . $sala->getNome() . "\n";
                 echo "Codice: " . $sala->getCodice() . "\n";
                 echo "Capienza: " .$sala->getCapienza() . "\n";
+            } else 
+                echo "Nessun record trovato con l'ID $id_find";
+            break;
+        case '7':
+            echo "Pezzo\n";
+            $id_find = readline("Digita id record di cui vuoi visualizzare il pezzo: ");
+            $record = Concerto::find($id_find);
+            if ($record) {
+                $pezzo = $record->pezzo();
+                echo "\nCodice: " . $pezzo->getCodice() . "\n";
+                echo "Titolo: " . $pezzo->getTitolo() . "\n";
             } else 
                 echo "Nessun record trovato con l'ID $id_find";
             break;
