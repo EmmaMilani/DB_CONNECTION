@@ -8,6 +8,7 @@ class Concerto
     private $descrizione;
     private $data_;
     private $sala_id;
+    private $pezzo_id;
 
     //metodi get e set
     public function getId(){ return $this -> id; }
@@ -25,6 +26,9 @@ class Concerto
 
     public function getSalaId(){ return $this -> sala_id; }
     public function setSalaId($value){ $this -> sala_id = $value; }
+
+    public function getPezzoId(){ return $this -> pezzo_id; }
+    public function setPezzoId($value){ $this -> pezzo_id = $value; }
 
     public function delete()
     {
@@ -63,12 +67,31 @@ class Concerto
         }
     }
 
+    public function pezzo(){
+        DbManager::initialize("localhost", "concerto", "file.txt");
+        $pezzoId = $this->getPezzoId();
+        echo "pezzoId: ". $pezzoId;
+        $query = "SELECT * FROM pezzi WHERE id = :pezzo_id";
+        try {
+            $stmt = DbManager::getPdo()->prepare($query);
+            $stmt->bindParam(':pezzo_id', $pezzoId, PDO::PARAM_INT);
+            $stmt->execute();
+            $record = $stmt->fetchObject('Pezzo');
+            if ($record) {
+                return $record;
+            } else {
+                return null; 
+            }
+        } catch (PDOException $e) {
+            die("\nErrore nella ricerca dell'elemento: " . $e->getMessage());        
+        }
+    }
 
     public function update($params)
     {
         DbManager::initialize("localhost", "concerto", "file.txt");
         $id = $this->getId();   
-        $query = "UPDATE concerti SET codice = :codice, titolo = :titolo, descrizione = :descrizione, data_ = :data_, sala_id = :sala_id WHERE id = :id";
+        $query = "UPDATE concerti SET codice = :codice, titolo = :titolo, descrizione = :descrizione, data_ = :data_, sala_id = :sala_id, pezzo_id = :pezzo_id WHERE id = :id";
 
         try {
             //mi connetto al database
@@ -80,6 +103,7 @@ class Concerto
             $stmt->bindParam(':descrizione', $params['descrizione'], PDO::PARAM_STR);
             $stmt->bindParam(':data_', $params['data_'], PDO::PARAM_STR);
             $stmt->bindParam(':sala_id', $params['sala_id'], PDO::PARAM_INT);
+            $stmt->bindParam(':pezzo_id', $params['pezzo_id'], PDO::PARAM_INT);
             //eseguo la query preparata precedentemente
             $stmt->execute();
             echo "\nCodice aggiornato con successo.\n";
@@ -149,7 +173,8 @@ class Concerto
         echo "Titolo: " . $this->getTitolo() . "\n";
         echo "Descrizione: " . $this->getDescrizione() . "\n";
         echo "Data: " . $this->getData() . "\n";
-        echo "SalaId: " . $this->getSalaId() . "\n"; 
+        echo "SalaId: " . $this->getSalaId() . "\n";
+        echo "PezzoId: " . $this->getPezzoId() . "\n";
         echo "--------------------------\n";
     }
 
@@ -158,7 +183,7 @@ class Concerto
     {
         DbManager::initialize("localhost", "concerto", "file.txt");
         //preparo la query SQL per la modifica del record nel database
-        $query = "INSERT INTO concerti (codice, titolo, descrizione, data_, sala_id) VALUES (:codice, :titolo, :descrizione, :data_concerto, :sala_id)";
+        $query = "INSERT INTO concerti (codice, titolo, descrizione, data_, sala_id, pezzo_id) VALUES (:codice, :titolo, :descrizione, :data_concerto, :sala_id, :pezzo_id)";
         
         try {
             //associo a ogni colonna il proprio valore
@@ -168,6 +193,7 @@ class Concerto
             $stmt->bindParam(':descrizione', $params['descrizione'], PDO::PARAM_STR);
             $stmt->bindParam(':data_concerto', $params['data_'], PDO::PARAM_STR);
             $stmt->bindParam(':sala_id', $params['sala_id'], PDO::PARAM_INT);
+            $stmt->bindParam(':pezzo_id', $params['pezzo_id'], PDO::PARAM_INT);
 
             $stmt->execute();
             echo "\nDati inseriti";
