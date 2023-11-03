@@ -73,8 +73,8 @@ class Concerto
         echo "pezzoId: ". $pezzoId;
         $query = "SELECT p.titolo , p.codice FROM (SELECT c.id 
         FROM concerto.concerti c INNER JOIN concerto.concerti_pezzi cp 
-        ON c.id = cp.concerto_id) pc INNER JOIN concerto.pezzi p 
-        ON pc.id = :pezzo_id";
+        ON c.id = cp.concerto_id) conc INNER JOIN concerto.pezzi p 
+        ON conc.id = :pezzo_id";
         try {
             $stmt = DbManager::getPdo()->prepare($query);
             $stmt->bindParam(':pezzo_id', $pezzoId, PDO::PARAM_INT);
