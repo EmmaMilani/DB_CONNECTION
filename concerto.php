@@ -79,7 +79,7 @@ class Concerto
             $stmt = DbManager::getPdo()->prepare($query);
             $stmt->bindParam(':pezzo_id', $pezzoId, PDO::PARAM_INT);
             $stmt->execute();
-            $record = $stmt->fetchObject('Pezzo');
+            $record = $stmt->fetchAll(PDO::FETCH_CLASS, "Pezzo");
             if ($record) {
                 return $record;
             } else {
