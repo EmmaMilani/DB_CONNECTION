@@ -71,7 +71,10 @@ class Concerto
         DbManager::initialize("localhost", "concerto", "file.txt");
         $pezzoId = $this->getPezzoId();
         echo "pezzoId: ". $pezzoId;
-        $query = "SELECT * FROM pezzi WHERE id = :pezzo_id";
+        $query = "SELECT p.titolo , p.codice FROM (SELECT c.id 
+        FROM concerto.concerti c INNER JOIN concerto.concerti_pezzi cp 
+        ON c.id = cp.concerto_id) pc INNER JOIN concerto.pezzi p 
+        ON pc.id = :pezzo_id";
         try {
             $stmt = DbManager::getPdo()->prepare($query);
             $stmt->bindParam(':pezzo_id', $pezzoId, PDO::PARAM_INT);
